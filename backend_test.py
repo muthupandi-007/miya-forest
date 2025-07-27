@@ -18,10 +18,14 @@ class MiyawakiAPITester:
         self.base_url = BACKEND_URL
         self.session = requests.Session()
         self.test_results = []
+        self.auth_token = None
+        self.user_id = None
         self.created_resources = {
+            'users': [],
             'locations': [],
             'plots': [],
-            'projects': []
+            'projects': [],
+            'alerts': []
         }
     
     def log_test(self, test_name, success, message, details=None):
