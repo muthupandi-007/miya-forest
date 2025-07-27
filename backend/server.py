@@ -279,6 +279,17 @@ async def get_mock_species_data(climate_zone: str, limit: int) -> List[Dict]:
 @api_router.post("/plots", response_model=PlotDesign)
 async def create_plot_design(plot: PlotDesignCreate):
     plot_dict = plot.dict()
+    # Generate default layout_config
+    plot_dict["layout_config"] = {
+        "grid_pattern": "miyawaki_dense",
+        "spacing": "0.5m x 0.5m",
+        "layer_distribution": {
+            "canopy": 0.1,
+            "sub_canopy": 0.2,
+            "shrub": 0.3,
+            "ground": 0.4
+        }
+    }
     plot_obj = PlotDesign(**plot_dict)
     await db.plots.insert_one(plot_obj.dict())
     return plot_obj
